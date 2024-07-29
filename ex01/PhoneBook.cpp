@@ -5,6 +5,10 @@ PhoneBook::PhoneBook() : numContacts(0)
 {
 }
 
+PhoneBook::~PhoneBook()
+{
+}
+
 void PhoneBook::addContact(const Contact &contact)
 {
 	if (numContacts < 8)
@@ -14,6 +18,7 @@ void PhoneBook::addContact(const Contact &contact)
 	}
 	else
 	{
+		contacts[0].~Contact();
 		for (int i = 1; i < 8; i++)
 		{
 			contacts[i - 1] = contacts[i];
@@ -53,10 +58,10 @@ void	printTen(const std::string &str)
 
 void PhoneBook::showContactsSearch()
 {
+	std::cout << "     Index|First name| Last name|  Nickname" << std::endl;
 	for (int i = 0; i < numContacts; i++)
 	{
 		Contact contact = contacts[i];
-		std::cout << "     Index|First name| Last name|  Nickname" << std::endl;
 		std::cout << "         " << (i + 1) << "|";
 		std::string str = contact.getFirstName();
 		printTen(str);

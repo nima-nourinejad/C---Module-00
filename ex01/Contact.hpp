@@ -7,6 +7,7 @@ class Contact
 {
   public:
 	Contact();
+	~Contact();
 
 	void setFirstName(const std::string &input);
 	void setLastName(const std::string &input);

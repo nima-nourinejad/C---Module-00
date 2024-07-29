@@ -77,11 +77,12 @@ int main()
 				std::cout << "Enter the index of the contact you want to see: ";
 				int index;
 				std::cin >> index;
+				
 				if (std::cin.fail())
 				{
 					std::cin.clear();
 					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-					std::cout << "Invalid index. Please try again." << std::endl;
+					std::cout << "Invalid index. Try again" << std::endl;
 				}
 				else
 				{
@@ -91,10 +92,8 @@ int main()
 				}
 			}
 		}
-
-        std::cout << "Enter ADD, SEARCH or EXIT" << std::endl;
         std::getline(std::cin, command);
     }
-
+	phoneBook.~PhoneBook();
     return 0;
 }
