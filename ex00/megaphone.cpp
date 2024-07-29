@@ -12,7 +12,7 @@ int	main(int argc, char **argv)
 		{
 			std::string str = argv[index];
 			int len = static_cast<int>(str.length());
-			for (int i; i < len; i++)
+			for (int i = 0; i < len; i++)
 			{
 				char c = static_cast<unsigned char>(str[i]);
 				c = std::toupper(c);
@@ -22,4 +22,5 @@ int	main(int argc, char **argv)
 		}
 	}
 	std::cout << std::endl;
+	return 0;
 }
