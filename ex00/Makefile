@@ -1,5 +1,5 @@
 NAME = megaphone
-CXX = g++
+CXX = c++
 RM = rm -f
 CXXFLAGS = -Wall -Wextra -Werror
 SRCS = ./megaphone.cpp
