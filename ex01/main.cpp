@@ -1,4 +1,5 @@
 #include "PhoneBook.hpp"
+#include <cstdio>
 #include <iostream>
 #include <limits>
 #include <string>
@@ -10,55 +11,68 @@ int main(void) {
   std::string input;
 
   std::cout << "Enter ADD, SEARCH or EXIT" << std::endl;
-  std::getline(std::cin >> std::ws, command);
-  while (command != "EXIT") {
+  std::getline(std::cin, command);
+  while (!std::cin.eof() && command != "EXIT") {
     if (command == "ADD") {
       std::string firstName, lastName, nickName, phoneNumber, darkestSecret;
-      while (true) {
+      while (!std::cin.eof() && true) {
         std::cout << "Enter your first name: ";
-        std::getline(std::cin >> std::ws, firstName);
+        std::getline(std::cin, firstName);
+        if (std::cin.eof())
+          break;
         if (!firstName.empty())
           break;
         std::cout << "First name cannot be empty. Please try again."
                   << std::endl;
       }
-      while (true) {
+      while (!std::cin.eof() && true) {
         std::cout << "Enter your last name: ";
-        std::getline(std::cin >> std::ws, lastName);
+        std::getline(std::cin, lastName);
         if (!lastName.empty())
           break;
         std::cout << "Last name cannot be empty. Please try again."
                   << std::endl;
       }
-      while (true) {
+      while (!std::cin.eof() && true) {
         std::cout << "Enter your nickname: ";
-        std::getline(std::cin >> std::ws, nickName);
+        std::getline(std::cin, nickName);
+        if (std::cin.eof())
+          break;
         if (!nickName.empty())
           break;
         std::cout << "Nickname cannot be empty. Please try again." << std::endl;
       }
-      while (true) {
+      while (!std::cin.eof() && true) {
         std::cout << "Enter your phone number: ";
-        std::getline(std::cin >> std::ws, phoneNumber);
+        std::getline(std::cin, phoneNumber);
+        if (std::cin.eof())
+          break;
         if (!phoneNumber.empty())
           break;
         std::cout << "Phone number cannot be empty. Please try again."
                   << std::endl;
       }
-      while (true) {
+      while (!std::cin.eof() && true) {
         std::cout << "Enter your darkest secret: ";
-        std::getline(std::cin >> std::ws, darkestSecret);
+        std::getline(std::cin, darkestSecret);
+        if (std::cin.eof())
+          break;
         if (!darkestSecret.empty())
           break;
         std::cout << "Darkest secret cannot be empty. Please try again."
                   << std::endl;
       }
-	Contact contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
+      if (std::cin.eof()) {
+        std::cout << std::endl;
+        break;
+      }
+      Contact contact(firstName, lastName, nickName, phoneNumber,
+                      darkestSecret);
       phoneBook.addContact(contact);
     } else if (command == "SEARCH") {
       phoneBook.showContactsInSearch();
       std::cout << "Enter the index of the contact you want to see: ";
-      std::getline(std::cin >> std::ws, input);
+      std::getline(std::cin, input);
       if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
         index = input[0] - '0';
         phoneBook.showOneContact(index);
@@ -66,7 +80,7 @@ int main(void) {
         std::cout << "Invalid index." << std::endl;
     }
     std::cout << "Enter ADD, SEARCH or EXIT" << std::endl;
-    std::getline(std::cin >> std::ws, command);
+    std::getline(std::cin, command);
   }
   return (0);
 }
