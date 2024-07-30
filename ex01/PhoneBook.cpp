@@ -18,17 +18,15 @@ void PhoneBook::addContact(const Contact &contact) {
 }
 
 void PhoneBook::showOneContact(int index) {
-  Contact contact;
 
   if (index < 1 || index > numContacts)
     std::cout << "Invalid index." << std::endl;
   else {
-    contact = contacts[index - 1];
-    std::cout << "First Name: " << contact.getFirstName() << std::endl;
-    std::cout << "Last Name: " << contact.getLastName() << std::endl;
-    std::cout << "Phone: " << contact.getPhoneNumber() << std::endl;
-    std::cout << "Nickname: " << contact.getNickName() << std::endl;
-    std::cout << "Darkest secret: " << contact.getDarkestSecret() << std::endl;
+    std::cout << "First Name: " << contacts[index - 1].getFirstName() << std::endl;
+    std::cout << "Last Name: " << contacts[index - 1].getLastName() << std::endl;
+    std::cout << "Phone: " << contacts[index - 1].getPhoneNumber() << std::endl;
+    std::cout << "Nickname: " << contacts[index - 1].getNickName() << std::endl;
+    std::cout << "Darkest secret: " << contacts[index - 1].getDarkestSecret() << std::endl;
   }
 }
 

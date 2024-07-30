@@ -5,7 +5,6 @@
 
 int main(void) {
   PhoneBook phoneBook;
-  Contact contact;
   int index;
   std::string command;
   std::string input;
@@ -54,11 +53,7 @@ int main(void) {
         std::cout << "Darkest secret cannot be empty. Please try again."
                   << std::endl;
       }
-      contact.setFirstName(firstName);
-      contact.setLastName(lastName);
-      contact.setNickName(nickName);
-      contact.setPhoneNumber(phoneNumber);
-      contact.setDarkestSecret(darkestSecret);
+	Contact contact(firstName, lastName, nickName, phoneNumber, darkestSecret);
       phoneBook.addContact(contact);
     } else if (command == "SEARCH") {
       phoneBook.showContactsInSearch();
