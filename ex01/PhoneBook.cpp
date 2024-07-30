@@ -24,8 +24,8 @@ void PhoneBook::showOneContact(int index) {
     std::cout << "Invalid index." << std::endl;
   else {
     contact = contacts[index - 1];
-    std::cout << "Full Name: " << contact.getFirstName() << " "
-              << contact.getLastName() << std::endl;
+    std::cout << "First Name: " << contact.getFirstName() << std::endl;
+    std::cout << "Last Name: " << contact.getLastName() << std::endl;
     std::cout << "Phone: " << contact.getPhoneNumber() << std::endl;
     std::cout << "Nickname: " << contact.getNickName() << std::endl;
     std::cout << "Darkest secret: " << contact.getDarkestSecret() << std::endl;
