@@ -9,18 +9,39 @@ int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
-Account::~Account() {}
+
 std::string getTime() {
   time_t currentTimestamp;
   currentTimestamp = time(NULL);
 
   tm *localTime;
   localTime = localtime(&currentTimestamp);
+  int year = localTime->tm_year + 1900;
+  int month = localTime->tm_mon + 1;
+  int day = localTime->tm_mday;
+  int hour = localTime->tm_hour;
+  int min = localTime->tm_min;
+  int sec = localTime->tm_sec;
 
   std::stringstream stringStream;
-  stringStream << "[" << localTime->tm_year + 1900 << localTime->tm_mon + 1
-               << localTime->tm_mday << "_" << localTime->tm_hour
-               << localTime->tm_min << localTime->tm_sec << "]";
+  stringStream << year;
+  if (month < 10)
+    stringStream << "0";
+  stringStream << month;
+  if (day < 10)
+    stringStream << "0";
+  stringStream << day;
+  stringStream << "_";
+  if (hour < 10)
+    stringStream << "0";
+  stringStream << hour;
+  if (min < 10)
+    stringStream << "0";
+  stringStream << min;
+  if (sec < 10)
+    stringStream << "0";
+  stringStream << sec;
+
   return stringStream.str();
 }
 
@@ -35,18 +56,25 @@ std::string logFileNameCreator(void) {
 void logger(std::string message) {
   std::string logFileName = logFileNameCreator();
   std::ofstream logFile(logFileName, std::ios::app);
-  logFile << getTime() << " " << message << std::endl;
+  logFile << "[" << getTime() << "]"
+          << " " << message << std::endl;
   logFile.close();
 }
 
 Account::Account(int initial_deposit)
-    : _accountIndex(_nbAccounts - 1), _amount(initial_deposit), _nbDeposits(0),
+    : _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(0),
       _nbWithdrawals(0) {
   _nbAccounts++;
   _totalAmount += initial_deposit;
   std::stringstream stringStream;
   stringStream << "index:" << _accountIndex << ";amount:" << _amount
                << ";created";
+  logger(stringStream.str());
+}
+Account::~Account() {
+  std::stringstream stringStream;
+  stringStream << "index:" << _accountIndex << ";amount:" << _amount
+               << ";closed";
   logger(stringStream.str());
 }
 
@@ -111,5 +139,11 @@ bool Account::makeWithdrawal(int withdrawal) {
 int Account::checkAmount(void) const { return _amount; }
 
 Account::Account()
-    : _accountIndex(_nbAccounts - 1), _amount(0), _nbDeposits(0),
-      _nbWithdrawals(0) {}
+    : _accountIndex(_nbAccounts), _amount(0), _nbDeposits(0),
+      _nbWithdrawals(0) {
+  _nbAccounts++;
+  std::stringstream stringStream;
+  stringStream << "index:" << _accountIndex << ";amount:" << _amount
+               << ";created";
+  logger(stringStream.str());
+}
