@@ -9,7 +9,6 @@ int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
-
 std::string getTime() {
   time_t currentTimestamp;
   currentTimestamp = time(NULL);
@@ -54,7 +53,8 @@ std::string logFileNameCreator(void) {
 }
 
 void logger(std::string message) {
-  std::string logFileName = logFileNameCreator();
+  std::string logFileNameString = logFileNameCreator();
+  const char *logFileName = logFileNameString.c_str();
   std::ofstream logFile(logFileName, std::ios::app);
   logFile << "[" << getTime() << "]"
           << " " << message << std::endl;
