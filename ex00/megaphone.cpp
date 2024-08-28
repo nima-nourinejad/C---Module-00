@@ -30,9 +30,9 @@ int main(int argc, char **argv) {
   else {
     for (int index = 1; index < argc; index++) {
       std::string str = argv[index];
-      int len = static_cast<int>(str.length());
 	  str = removeLeadingSpace(str);
 	  str = removeTrailingSpace(str);
+	  int len = static_cast<int>(str.length());
       for (int i = 0; i < len; i++) {
         char c = static_cast<unsigned char>(str[i]);
         c = std::toupper(c);
