@@ -79,7 +79,6 @@ int main(void) {
       } else
         std::cout << "Invalid index." << std::endl;
     }
-    std::cout << "Enter ADD, SEARCH or EXIT" << std::endl;
     std::getline(std::cin, command);
   }
   return (0);
