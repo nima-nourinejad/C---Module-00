@@ -1,6 +1,8 @@
 #include "PhoneBook.hpp"
 #include <iostream>
 #include <limits>
+#include <string>
+#include <regex>
 
 PhoneBook::PhoneBook() : numContacts(0) {}
 
@@ -21,7 +23,7 @@ void PhoneBook::addContact(const Contact &contact) {
 void PhoneBook::showOneContact(int index) {
 
   if (index < 1 || index > numContacts)
-    std::cout << "Invalid index." << std::endl;
+    std::cerr << "Invalid index." << std::endl;
   else {
     std::cout << "First Name: " << contacts[index - 1].getFirstName() << std::endl;
     std::cout << "Last Name: " << contacts[index - 1].getLastName() << std::endl;
@@ -76,6 +78,28 @@ void PhoneBook::search(){
 		std::cerr << "Invalid index." << std::endl;
 }
 
+int valid_data(std::string str, std::string type)
+{
+	if (str.empty())
+	{
+		std::cerr << type << " cannot be empty. Please try again." << std::endl;
+		return (0);
+	}
+	std::regex non_digit("\\D");
+	std::regex non_space("\\S");
+	if (type == "phone number" && std::regex_search(str, non_digit))
+	{
+		std::cerr << "Phone number must contain only digits. Please try again." << std::endl;
+		return (0);
+	}
+	else if (type != "phone number" && !std::regex_search(str, non_space))
+	{
+		std::cerr << type << " can not only contain spaces. Please try again." << std::endl;
+		return (0);
+	}
+	return (1);
+}
+
 int gettingInfo(std::string &str, std::string type)
 {
 
@@ -83,7 +107,7 @@ int gettingInfo(std::string &str, std::string type)
 	{
 		std::cout << "Enter your " << type << ": ";
 		std::getline(std::cin, str);
-		if (!str.empty())
+		if (valid_data(str, type))
 			break;
 		std::cerr << type << " cannot be empty. Please try again." << std::endl;
 	}

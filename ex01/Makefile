@@ -8,7 +8,7 @@ SRCS = main.cpp \
 		
 OBJS = $(SRCS:.cpp=.o)
 
-.PHONY: all clean fclean re c98
+.PHONY: all clean fclean re c11
 
 all: $(NAME)
 
@@ -26,5 +26,5 @@ fclean: clean
 
 re: fclean all
 
-c98: CXXFLAGS += -std=c++98
-c98: re
+c11: CXXFLAGS += -std=c++11
+c11: re
