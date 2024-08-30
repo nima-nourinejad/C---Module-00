@@ -109,7 +109,6 @@ int gettingInfo(std::string &str, std::string type)
 		std::getline(std::cin, str);
 		if (valid_data(str, type))
 			break;
-		std::cerr << type << " cannot be empty. Please try again." << std::endl;
 	}
 	if (std::cin.eof())
 	{
@@ -122,15 +121,15 @@ int gettingInfo(std::string &str, std::string type)
 
 int gettingALLInfo(std::string &firstName, std::string &lastName, std::string &nickName, std::string &phoneNumber, std::string &darkestSecret)
 {
-	if (gettingInfo(firstName, "first name"))
+	if (gettingInfo(firstName, "First name"))
 		return (1);
-	if (gettingInfo(lastName, "last name"))
+	if (gettingInfo(lastName, "Last name"))
 		return (1);
-	if (gettingInfo(nickName, "nickname"))
+	if (gettingInfo(nickName, "Nickname"))
 		return (1);
-	if (gettingInfo(phoneNumber, "phone number"))
+	if (gettingInfo(phoneNumber, "Phone number"))
 		return (1);
-	if (gettingInfo(darkestSecret, "darkest secret"))
+	if (gettingInfo(darkestSecret, "Darkest secret"))
 		return (1);
 	return (0);
 }
