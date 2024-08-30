@@ -1,5 +1,6 @@
 #include "PhoneBook.hpp"
 #include <iostream>
+#include <limits>
 
 PhoneBook::PhoneBook() : numContacts(0) {}
 
@@ -57,4 +58,65 @@ void PhoneBook::showContactsInSearch() {
     printTen(str);
     std::cout << std::endl;
   }
+}
+
+void PhoneBook::search(){
+	PhoneBook::showContactsInSearch();
+	std::cout << "Enter the index of the contact you want to see: ";
+	std::string input;
+	std::getline(std::cin, input);
+	if (std::cin.eof()) {
+        std::cin.clear();
+        return ;
+      }
+	if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
+		int index = input[0] - '0';
+		PhoneBook::showOneContact(index);
+	} else
+		std::cerr << "Invalid index." << std::endl;
+}
+
+int gettingInfo(std::string &str, std::string type)
+{
+
+	while (!std::cin.eof())
+	{
+		std::cout << "Enter your " << type << ": ";
+		std::getline(std::cin, str);
+		if (!str.empty())
+			break;
+		std::cerr << type << " cannot be empty. Please try again." << std::endl;
+	}
+	if (std::cin.eof())
+	{
+		std::cin.clear();
+		return (1);
+	}
+	return (0);
+}
+
+
+int gettingALLInfo(std::string &firstName, std::string &lastName, std::string &nickName, std::string &phoneNumber, std::string &darkestSecret)
+{
+	if (gettingInfo(firstName, "first name"))
+		return (1);
+	if (gettingInfo(lastName, "last name"))
+		return (1);
+	if (gettingInfo(nickName, "nickname"))
+		return (1);
+	if (gettingInfo(phoneNumber, "phone number"))
+		return (1);
+	if (gettingInfo(darkestSecret, "darkest secret"))
+		return (1);
+	return (0);
+}
+
+void PhoneBook::add()
+{
+      std::string firstName, lastName, nickName, phoneNumber, darkestSecret;
+	  if (gettingALLInfo(firstName, lastName, nickName, phoneNumber, darkestSecret))
+		  return ;
+      Contact contact(firstName, lastName, nickName, phoneNumber,
+                      darkestSecret);
+      PhoneBook::addContact(contact);
 }
