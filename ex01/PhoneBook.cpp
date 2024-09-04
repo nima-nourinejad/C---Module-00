@@ -3,21 +3,30 @@
 #include <limits>
 #include <string>
 #include <regex>
+#include <iomanip>
 
 PhoneBook::PhoneBook() : numContacts(0) {}
 
 PhoneBook::~PhoneBook() {}
 
+int PhoneBook::oldestContact() const
+{
+	int oldest = 0;
+	for (int i = 1; i < 8; i++)
+	{
+		if (this->contacts[i].getContactIndex() < contacts[oldest].getContactIndex())
+			oldest = i;
+	}
+  return oldest;
+}
+
 void PhoneBook::addContact(const Contact &contact) {
   if (numContacts < 8) {
     contacts[numContacts] = contact;
     ++numContacts;
-  } else {
-    for (int i = 1; i < 8; i++) {
-      contacts[i - 1] = contacts[i];
-    }
-    contacts[7] = contact;
   }
+  else
+    this->contacts[oldestContact()] = contact;
 }
 
 void PhoneBook::showOneContact(int index) {
@@ -34,15 +43,16 @@ void PhoneBook::showOneContact(int index) {
 }
 
 void printTen(const std::string &str) {
-  int len;
+  std::string temp;
 
-  len = static_cast<int>(str.length());
-  for (int i = 0; i < 10 - len; i++)
-    std::cout << " ";
-  for (int i = 0; i < 9 && i < len; i++)
-    std::cout << str[i];
-  if (len > 10)
-    std::cout << ".";
+  if (str.length() > 10)
+	{
+		temp = str.substr(0, 9);
+		temp += ".";
+	}
+	else
+		temp = str;
+  std::cout << std::setw(10) << std::right << temp;
 }
 
 void PhoneBook::showContactsInSearch() {
@@ -69,6 +79,7 @@ void PhoneBook::search(){
 	std::getline(std::cin, input);
 	if (std::cin.eof()) {
         std::cin.clear();
+		std::cout << std::endl;
         return ;
       }
 	if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
@@ -87,12 +98,12 @@ int valid_data(std::string str, std::string type)
 	}
 	std::regex non_digit("\\D");
 	std::regex non_space("\\S");
-	if (type == "phone number" && std::regex_search(str, non_digit))
+	if (type == "Phone number" && std::regex_search(str, non_digit))
 	{
 		std::cerr << "Phone number must contain only digits. Please try again." << std::endl;
 		return (0);
 	}
-	else if (type != "phone number" && !std::regex_search(str, non_space))
+	else if (type != "Phone number" && !std::regex_search(str, non_space))
 	{
 		std::cerr << type << " can not only contain spaces. Please try again." << std::endl;
 		return (0);
@@ -107,12 +118,13 @@ int gettingInfo(std::string &str, std::string type)
 	{
 		std::cout << "Enter your " << type << ": ";
 		std::getline(std::cin, str);
-		if (valid_data(str, type))
+		if (std::cin.eof() || valid_data(str, type))
 			break;
 	}
 	if (std::cin.eof())
 	{
 		std::cin.clear();
+		std::cout << std::endl;
 		return (1);
 	}
 	return (0);

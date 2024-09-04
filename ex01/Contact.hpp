@@ -14,6 +14,7 @@ public:
   std::string getNickName() const;
   std::string getPhoneNumber() const;
   std::string getDarkestSecret() const;
+  int getContactIndex() const;
 
 private:
   std::string firstName;
@@ -21,6 +22,8 @@ private:
   std::string nickName;
   std::string phoneNumber;
   std::string darkestSecret;
+  static int totalContacts;
+  int 		contactIndex;
 };
 
 #endif // CONTACT_HPP

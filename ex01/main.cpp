@@ -18,6 +18,9 @@ int main(void) {
 		break;
   }
   if (std::cin.eof())
+  {
+	std::cout << "EOF : Exiting program" << std::endl;
 	std::cin.clear();
+  }
   return (0);
 }

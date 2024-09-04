@@ -7,11 +7,8 @@ class PhoneBook {
 public:
   PhoneBook();
   ~PhoneBook();
-//   void addContact(const Contact &contact);
   void search();
   void add();
-//   void showOneContact(int index);
-//   void showContactsInSearch();
 
 private:
   Contact contacts[8];
@@ -19,6 +16,7 @@ private:
   void showOneContact(int index);
   void showContactsInSearch();
   void addContact(const Contact &contact);
+  int oldestContact() const;
 };
 
 #endif // PHONEBOOK_HPP
