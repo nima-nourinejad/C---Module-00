@@ -55,12 +55,12 @@ void printTen(const std::string &str) {
   std::cout << std::setw(10) << std::right << temp;
 }
 
-void PhoneBook::showContactsInSearch() {
-  std::cout << "     Index|First name| Last name|  Nickname" << std::endl;
-  for (int i = 0; i < numContacts; i++) {
-    Contact contact = contacts[i];
-    std::cout << "         " << (i + 1) << "|";
-    std::string str = contact.getFirstName();
+void printIndex(int index) {
+  std::cout << std::setw(10) << std::right << (index + 1) << "|";
+}
+
+void printContact(const Contact &contact) {
+  	std::string str = contact.getFirstName();
     printTen(str);
     std::cout << "|";
     str = contact.getLastName();
@@ -69,6 +69,18 @@ void PhoneBook::showContactsInSearch() {
     str = contact.getNickName();
     printTen(str);
     std::cout << std::endl;
+}
+
+void printHeader() {
+  std::cout << "     Index|First name| Last name|  Nickname" << std::endl;
+}
+
+void PhoneBook::showContactsInSearch() {
+  printHeader();
+  for (int i = 0; i < numContacts; i++) {
+    Contact contact = contacts[i];
+	printIndex(i);
+	printContact(contact);
   }
 }
 
@@ -77,11 +89,8 @@ void PhoneBook::search(){
 	std::cout << "Enter the index of the contact you want to see: ";
 	std::string input;
 	std::getline(std::cin, input);
-	if (std::cin.eof()) {
-        std::cin.clear();
-		std::cout << std::endl;
+	if (std::cin.eof())
         return ;
-      }
 	if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
 		int index = input[0] - '0';
 		PhoneBook::showOneContact(index);
@@ -122,11 +131,7 @@ int gettingInfo(std::string &str, std::string type)
 			break;
 	}
 	if (std::cin.eof())
-	{
-		std::cin.clear();
-		std::cout << std::endl;
 		return (1);
-	}
 	return (0);
 }
 

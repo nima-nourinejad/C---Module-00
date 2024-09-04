@@ -5,10 +5,12 @@
 int main(void) {
   PhoneBook phoneBook;
   std::string command;
-
-  std::cout << "Enter ADD, SEARCH or EXIT" << std::endl;
   while (!std::cin.eof())
   {
+	if (std::cin.eof())
+		break;
+	else
+		std::cout << "Enter ADD, SEARCH or EXIT: ";
 	std::getline(std::cin, command);
     if (command == "ADD")
 	 	phoneBook.add();
@@ -19,7 +21,8 @@ int main(void) {
   }
   if (std::cin.eof())
   {
-	std::cout << "EOF : Exiting program" << std::endl;
+	std::cout << std::endl;
+	std::cout << "End of input detected (EOF). Exiting the program." << std::endl;
 	std::cin.clear();
   }
   return (0);
