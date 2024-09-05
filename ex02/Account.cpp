@@ -9,49 +9,61 @@ int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
 int Account::_totalNbWithdrawals = 0;
 
+void add(std::stringstream &stringstream, int value) {
+  if (value < 10)
+	stringstream << "0";
+  stringstream << value;
+}
+
+void grabData(tm *localTime, int &year, int &month, int &day, int &hour,
+			  int &min, int &sec) {
+  year = localTime->tm_year + 1900;
+  month = localTime->tm_mon + 1;
+  day = localTime->tm_mday;
+  hour = localTime->tm_hour;
+  min = localTime->tm_min;
+  sec = localTime->tm_sec;
+}
+
+void addData(std::stringstream &stringStream, int year, int month, int day,
+			 int hour, int min, int sec)
+{
+  stringStream << year;
+  add(stringStream, month);
+  add(stringStream, day);
+  stringStream << "_";
+  add(stringStream, hour);
+  add(stringStream, min);
+  add(stringStream, sec);
+
+}
+
 std::string getTime() {
+
+  /// Get the current timestamp
   time_t currentTimestamp;
   currentTimestamp = time(NULL);
-
+  /// Convert the timestamp to a local time
   tm *localTime;
   localTime = localtime(&currentTimestamp);
-  int year = localTime->tm_year + 1900;
-  int month = localTime->tm_mon + 1;
-  int day = localTime->tm_mday;
-  int hour = localTime->tm_hour;
-  int min = localTime->tm_min;
-  int sec = localTime->tm_sec;
-
+  /// Get the year, month, day, hour, min, sec
+  int year, month, day, hour, min, sec;
+  grabData(localTime, year, month, day, hour, min, sec);
+  /// Create a string stream to store the local time in the format of year_month_day_hour_min_sec
   std::stringstream stringStream;
-  stringStream << year;
-  if (month < 10)
-    stringStream << "0";
-  stringStream << month;
-  if (day < 10)
-    stringStream << "0";
-  stringStream << day;
-  stringStream << "_";
-  if (hour < 10)
-    stringStream << "0";
-  stringStream << hour;
-  if (min < 10)
-    stringStream << "0";
-  stringStream << min;
-  if (sec < 10)
-    stringStream << "0";
-  stringStream << sec;
+  addData(stringStream, year, month, day, hour, min, sec);
 
   return stringStream.str();
 }
-
+////////////////////////////////////////////////////// Display the current time required by header
 void _displayTimestamp(void) { std::cout << getTime() << std::endl; }
-
+////////////////////////////////////////////////////// Create a log file name based on the current time and with a .log extension
 std::string logFileNameCreator(void) {
   std::stringstream stingStream;
   stingStream << getTime() << ".log";
   return stingStream.str();
 }
-
+////////////////////////////////////////////////////// Create or append to a log file with time and with the message passed as an argument
 void logger(std::string message) {
   std::string logFileNameString = logFileNameCreator();
   const char *logFileName = logFileNameString.c_str();
@@ -60,7 +72,7 @@ void logger(std::string message) {
           << " " << message << std::endl;
   logFile.close();
 }
-
+////////////////////////////////////////////////////// Constructor with initial deposit and log the creation of the account
 Account::Account(int initial_deposit)
     : _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(0),
       _nbWithdrawals(0) {
@@ -71,6 +83,7 @@ Account::Account(int initial_deposit)
                << ";created";
   logger(stringStream.str());
 }
+////////////////////////////////////////////////////// Destructor and log the closure of the account
 Account::~Account() {
   std::stringstream stringStream;
   stringStream << "index:" << _accountIndex << ";amount:" << _amount
@@ -85,7 +98,7 @@ int Account::getTotalAmount(void) { return Account::_totalAmount; }
 int Account::getNbDeposits(void) { return Account::_totalNbDeposits; }
 
 int Account::getNbWithdrawals(void) { return Account::_totalNbWithdrawals; }
-
+////////////////////////////////////////////////////// Display the total number of accounts, total amount, total number of deposits, and total number of withdrawals
 void Account::displayAccountsInfos(void) {
   std::stringstream stringStream;
   stringStream << "accounts:" << Account::getNbAccounts()
@@ -94,7 +107,7 @@ void Account::displayAccountsInfos(void) {
                << ";withdrawals:" << Account::getNbWithdrawals();
   logger(stringStream.str());
 }
-
+////////////////////////////////////////////////////// Display the single account index, amount, number of deposits, and number of withdrawals
 void Account::displayStatus(void) const {
   std::stringstream stringStream;
   stringStream << "index:" << _accountIndex << ";amount:" << _amount
