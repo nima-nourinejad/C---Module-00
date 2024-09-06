@@ -34,9 +34,14 @@ int main(int argc, char **argv) {
 	  str = removeTrailingSpace(str);
 	  int len = static_cast<int>(str.length());
       for (int i = 0; i < len; i++) {
-        char c = static_cast<unsigned char>(str[i]);
-        c = std::toupper(c);
-        std::cout << c;
+		if (!isalpha(str[i]))
+			std::cout << str[i];
+		else
+		{
+			char c = static_cast<unsigned char>(str[i]);
+			c = std::toupper(c);
+			std::cout << c;
+		}
       }
 	  if (index < argc -1)
         std::cout << " ";
